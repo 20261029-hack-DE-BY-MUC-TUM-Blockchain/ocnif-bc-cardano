@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./client": "./client/index.ts"
+  },
   "scripts": {
     "start": "node --env-file-if-exists=.env src/server.ts",
     "test": "node --test src/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@evolution-sdk/evolution": "0.5.19",
     "@x402/cardano": "2.29.0",
     "@x402/core": "2.29.0",
     "@x402/express": "2.29.0",
