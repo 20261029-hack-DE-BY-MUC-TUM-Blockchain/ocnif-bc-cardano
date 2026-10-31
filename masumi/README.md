@@ -4,6 +4,12 @@ This is the selected Cardano integration. The agent turns supplied security evid
 
 The worker/payment state machines adapt the official TUM quickstart at revision `d93783b907a5b0b7008c67496c6e093faa70553f`; `provenance.json` records exact upstream source hashes. Upstream README and AGENTS were read; governance was not copied. Eve/ZAI inference is replaced by the Ocnif core bridge, so this subproject has no npm runtime dependencies. The separately installed Sokosumi CLI must be **1.0.4 under Node24.x** because the supported vault/runtime adapter imports that version's modules.
 
+## Current Preprod compatibility
+
+CLI1.0.4 currently calls a removed Personal Workspace endpoint. Ocnif's `node sokosumi.mjs ...` wrapper preserves that pinned CLI and OS vault while adapting only its Personal Workspace module to the current official API. The hook checks the original module's SHA256 before substitution; `provenance.json` pins the current official source. No global CLI files are changed. Use this wrapper for the guide's personal setup/Task commands (omit the redundant `--preprod` and `--json`, supplied by the wrapper). Account login remains the supported global CLI command. Runtime worker calls use the same compatibility wrapper automatically.
+
+The live corrected route returned Personal Workspace existence and GRANTED access. On October31,2026, the resulting actual Task reached COMPLETED with a saved Rust-core review. This is execution-only evidence, not payment settlement.
+
 ## Execution-only setup first
 
 1. Use your own account at `https://preprod.sokosumi.com`. Run `sokosumi --preprod auth login`, `auth whoami --json`, and `sokosumi skills`. Read help before account changes.

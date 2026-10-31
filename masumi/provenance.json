@@ -64,5 +64,14 @@
 			"path": "worker-lock.test.mjs",
 			"sha256": "8dbd57856994832122b2ea62b84169863b8c50f01a1b4eba717da5d609b00af7"
 		}
-	]
+	],
+	"personalWorkspaceCompatibility": {
+		"upstream": "https://github.com/masumi-network/sokosumi",
+		"revision": "6748bafbc76a8108b7723bc85bc4084d50864429",
+		"path": "apps/cli/src/api/services/personal-workspace-service.ts",
+		"sha256": "fe7a9e30a278ca1cab0d036e2f4e5ab463099305367f6cece2e46664e4fb8d53",
+		"installedVersion": "1.0.4",
+		"guardedOriginalModuleSHA256": "cfecfd50ae8c9445f24860d7d6f073fae9f13af4b293db7799bb6c426c8808b5",
+		"reason": "Live Preprod removed workspace-access; current official source uses users/me/workspaces. Only this module is adapted; no global package or credential-vault modification."
+	}
 }

@@ -1,3 +1,6 @@
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { sokosumiRoot } from "./sokosumi-runtime.mjs";
 import { execFileSync } from "node:child_process";
 export function verifyCli(run = execFileSync) {
 	const version = run("sokosumi", ["--version"], {
@@ -10,9 +13,20 @@ export function verifyCli(run = execFileSync) {
 		);
 	return version;
 }
+export function cliArguments(args) {
+	const executable = join(dirname(sokosumiRoot()), "bin", "sokosumi.js");
+	return [
+		"--import",
+		fileURLToPath(new URL("./compat-register.mjs", import.meta.url)),
+		executable,
+		"--preprod",
+		...args,
+		"--json",
+	];
+}
 export function cli(args, run = execFileSync) {
 	return JSON.parse(
-		run("sokosumi", ["--preprod", ...args, "--json"], {
+		run(process.execPath, cliArguments(args), {
 			encoding: "utf8",
 			timeout: 30000,
 			maxBuffer: 4 * 1024 * 1024,
