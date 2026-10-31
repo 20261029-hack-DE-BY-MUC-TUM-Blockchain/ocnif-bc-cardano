@@ -1,10 +1,12 @@
-import { paymentConfig } from "./config.mjs";
 import fs from "node:fs";
+import { paymentConfig } from "./config.mjs";
 import {
 	registrationUrl,
-	requireSavedRuntimeToken,
 	requireAgentAuthor,
+	requireSavedRuntimeToken,
 } from "./registration-config.mjs";
+import { verifiedRuntimeKeyScope } from "./runtime-key.mjs";
+
 const statePath = ".local/registration-state.json";
 const payment = JSON.parse(fs.readFileSync(".local/payment-state.json"));
 const state = fs.existsSync(statePath)
@@ -41,6 +43,11 @@ async function request(path, body) {
 if (process.argv[2] === "key") {
 	if (state.runtimeKeyId) {
 		requireSavedRuntimeToken(".local/mps-runtime.env");
+		state.keyEvidence = verifiedRuntimeKeyScope(
+			state.keyEvidence,
+			payment.walletId,
+		);
+		save();
 		console.log("Runtime key already saved", state.runtimeKeyId);
 		process.exit(0);
 	}
@@ -77,14 +84,7 @@ if (process.argv[2] === "key") {
 	);
 	state.runtimeKeyId = key.id;
 	state.keyWritePending = false;
-	state.keyEvidence = {
-		canRead: key.canRead,
-		canPay: key.canPay,
-		canAdmin: key.canAdmin,
-		NetworkLimit: key.NetworkLimit,
-		walletScopeEnabled: key.walletScopeEnabled,
-		WalletScopeHotWalletIds: key.WalletScopeHotWalletIds,
-	};
+	state.keyEvidence = verifiedRuntimeKeyScope(key, payment.walletId);
 	save();
 	console.log("Runtime key created", key.id, JSON.stringify(state.keyEvidence));
 } else if (process.argv[2] === "register") {

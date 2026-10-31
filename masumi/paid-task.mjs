@@ -1,27 +1,30 @@
-import { paymentConfig } from "./config.mjs";
 import { randomBytes } from "node:crypto";
-import { readFileSync, existsSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { parseEnv } from "node:util";
+import { paymentConfig } from "./config.mjs";
+import {
+	confirmedState,
+	purchasePayload,
+	taskHash,
+	USDM,
+	verifyRequestedTerms,
+} from "./payment-terms.mjs";
+import { verifiedRuntimeKeyScope } from "./runtime-key.mjs";
 import { verifySettlement } from "./settlement.mjs";
 import { loadSokosumiRuntime } from "./sokosumi-runtime.mjs";
 import {
-	taskTarget,
 	assertTaskTarget,
+	taskTarget,
 	verifyRuntimeTask,
 } from "./task-target.mjs";
-import {
-	USDM,
-	taskHash,
-	purchasePayload,
-	confirmedState,
-	verifyRequestedTerms,
-} from "./payment-terms.mjs";
+
 export {
-	USDM,
-	taskHash,
-	purchasePayload,
 	confirmedState,
+	purchasePayload,
+	taskHash,
+	USDM,
 } from "./payment-terms.mjs";
+
 const MINUTE = 60 * 1000;
 export function isPaidReady() {
 	if (
@@ -30,6 +33,11 @@ export function isPaidReady() {
 	)
 		return false;
 	const r = JSON.parse(readFileSync(".local/registration-state.json", "utf8"));
+	try {
+		verifiedRuntimeKeyScope(r.keyEvidence, r.walletId);
+	} catch {
+		return false;
+	}
 	return Boolean(
 		r.agentIdentifier &&
 			Number.isInteger(r.supportedPaymentSourceIndex) &&
