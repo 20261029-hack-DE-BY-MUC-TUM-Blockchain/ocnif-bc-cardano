@@ -131,6 +131,20 @@ test("readiness separates health, local execution proof, and settlement", async 
 	assert.equal(after.executionOnly.verified, true);
 	assert.equal(after.paid.settlementVerified, false);
 	assert.equal(after.evidence.source, "local-worker-receipt");
+	const unavailableBroker = await readiness(
+		{
+			...settings,
+			statusBrokerUrl: "http://ocnif-backend/api/internal/masumi/status",
+			token,
+		},
+		async (url) =>
+			url.endsWith("/health")
+				? Response.json({})
+				: new Response(null, { status: 503 }),
+	);
+	assert.equal(unavailableBroker.executionOnly.verified, true);
+	assert.equal(unavailableBroker.executionOnly.taskId, null);
+	assert.doesNotMatch(JSON.stringify(unavailableBroker), /fixture-task/);
 	assert.equal(
 		(
 			await readiness({ ...settings, coworkerId: "another" }, async () =>

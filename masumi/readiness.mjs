@@ -58,7 +58,7 @@ export async function readiness(settings, fetcher = fetch) {
 		coworkerConfigured: Boolean(settings.coworkerId),
 		executionOnly: {
 			verified: executionVerified,
-			taskId: executionVerified ? proof.taskId : null,
+			taskId: null,
 			...(executionVerified
 				? { source: "local-worker-receipt", observedAt: proof.completedAt }
 				: {}),
