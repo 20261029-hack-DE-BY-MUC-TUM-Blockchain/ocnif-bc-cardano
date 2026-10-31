@@ -1,10 +1,11 @@
-import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { advanceExecution } from "./worker.mjs";
+import test from "node:test";
 import { verifyCli } from "./cli.mjs";
+import { advanceExecution } from "./worker.mjs";
+
 const target = {
 	coworkerId: "fixture-coworker",
 	organizationId: null,
@@ -39,6 +40,7 @@ test("pinned CLI validation rejects incompatible runtime adapter versions", () =
 test("task start, model, completion persist pending states before external calls", async (t) => {
 	directory(t);
 	const phases = [];
+	const receiptPaths = [];
 	const calls = [];
 	const state = await advanceExecution(
 		task,
@@ -46,7 +48,10 @@ test("task start, model, completion persist pending states before external calls
 		{
 			target,
 			runtime,
-			persist: (_path, value) => phases.push(value.phase ?? value.status),
+			persist: (path, value) => {
+				phases.push(value.phase ?? value.status);
+				if (value.status === "COMPLETED") receiptPaths.push(path);
+			},
 			command: (args) => {
 				calls.push(args[1]);
 				if (args[1] === "start") {
@@ -78,6 +83,11 @@ test("task start, model, completion persist pending states before external calls
 		"complete-pending",
 		"completed",
 		"COMPLETED",
+		"COMPLETED",
+	]);
+	assert.deepEqual(receiptPaths, [
+		".local/last-completion-proof.json",
+		".local/execution-proof.json",
 	]);
 });
 test("ambiguous journals never automatically repeat effects", async () => {

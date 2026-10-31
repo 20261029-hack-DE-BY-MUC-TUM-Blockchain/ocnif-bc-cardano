@@ -1,18 +1,20 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { acquireWorkerLock } from "./worker-lock.mjs";
+import { cli, verifyCli } from "./cli.mjs";
 import { answer, client } from "./client.mjs";
 import { reply, runtimeClient } from "./comments.mjs";
+import { config, safeTaskId } from "./config.mjs";
 import { createPaidAdapter, isPaidReady } from "./paid-task.mjs";
+import { createStatusPublisher } from "./status-publisher.mjs";
 import {
-	taskTarget,
 	isTaskForTarget,
+	taskTarget,
 	verifyRuntimeTask,
 } from "./task-target.mjs";
-import { config, safeTaskId } from "./config.mjs";
-import { cli, verifyCli } from "./cli.mjs";
+import { acquireWorkerLock } from "./worker-lock.mjs";
+
 const save = (path, value) =>
 	writeFileSync(path, JSON.stringify(value), { mode: 0o600 });
 export function verifyExecutionProof(target) {
@@ -99,6 +101,14 @@ export async function advanceExecution(
 			completionEventId: completion.eventId,
 		};
 		persist(journal, state);
+		persist(".local/last-completion-proof.json", {
+			taskId: id,
+			coworkerId: target.coworkerId,
+			organizationId: target.organizationId,
+			status: "COMPLETED",
+			resultSHA256: state.resultSHA256,
+			completedAt: new Date().toISOString(),
+		});
 		if (!target.organizationId)
 			persist(".local/execution-proof.json", {
 				taskId: id,
@@ -124,6 +134,7 @@ export async function runWorker() {
 		});
 	await client.health();
 	const runtime = await runtimeClient(target);
+	const publishStatus = createStatusPublisher({ runtime, target });
 	const paidEnabled = config().paidEnabled;
 	if (paidEnabled) {
 		verifyExecutionProof(target);
@@ -194,6 +205,13 @@ export async function runWorker() {
 				registrationConfirmed: isPaidReady(),
 				settlementVerified,
 			});
+			try {
+				await publishStatus();
+			} catch {
+				console.error(
+					"Cloud status heartbeat was not accepted; local task processing continues",
+				);
+			}
 		} catch {
 			console.error("Task discovery unavailable; retrying read only");
 		}

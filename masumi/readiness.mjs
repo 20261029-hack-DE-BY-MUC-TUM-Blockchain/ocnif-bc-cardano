@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { readBrokerEvidence } from "./status-reader.mjs";
 
 function privateRecord(directory, name) {
 	try {
@@ -50,7 +51,7 @@ export async function readiness(settings, fetcher = fetch) {
 	if (!registrationConfirmed)
 		setupRequired.push("masumi_payment_service", "masumi_registration");
 	if (!settlementVerified) setupRequired.push("paid_task");
-	return {
+	const status = {
 		integration: "masumi-sokosumi",
 		network: "cardano:preprod",
 		agentReady,
@@ -77,4 +78,5 @@ export async function readiness(settings, fetcher = fetch) {
 				}
 			: {}),
 	};
+	return readBrokerEvidence(settings, status, fetcher);
 }

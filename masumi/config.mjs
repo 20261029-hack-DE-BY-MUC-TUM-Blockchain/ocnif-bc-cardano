@@ -32,6 +32,7 @@ export function config(env = process.env) {
 		coworkerId: env.COWORKER_ID?.trim() || null,
 		paidEnabled: env.PAID_TASKS_ENABLED === "true",
 		statusDirectory: env.STATUS_DIRECTORY ?? ".local",
+		statusBrokerUrl: env.STATUS_BROKER_URL ?? null,
 	};
 }
 export function safeTaskId(id) {
