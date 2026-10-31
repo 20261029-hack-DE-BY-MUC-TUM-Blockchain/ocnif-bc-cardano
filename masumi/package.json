@@ -1,0 +1,16 @@
+{
+	"name": "ocnif-masumi-worker",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": "24.x"
+	},
+	"scripts": {
+		"start": "node --env-file-if-exists=.env agent-server.mjs",
+		"worker": "node --env-file-if-exists=.env worker.mjs",
+		"api": "node --env-file-if-exists=.env --env-file-if-exists=.local/mps-runtime.env agent-api.mjs",
+		"probe": "node --env-file-if-exists=.env probe.mjs",
+		"test": "node --test *.test.mjs"
+	},
+	"dependencies": {}
+}

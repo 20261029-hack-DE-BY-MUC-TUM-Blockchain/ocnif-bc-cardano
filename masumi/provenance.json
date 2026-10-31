@@ -1,0 +1,68 @@
+{
+	"upstream": "https://github.com/masumi-network/tum-hackathon-quickstart",
+	"revision": "d93783b907a5b0b7008c67496c6e093faa70553f",
+	"reviewed": ["README.md", "AGENTS.md"],
+	"adaptation": "Official worker/payment state boundaries; Ocnif replaces Eve/ZAI model client with core-only authenticated inference. No governance file copied; no account/wallet/task identifiers copied.",
+	"sourceFiles": [
+		{
+			"path": "task-target.mjs",
+			"sha256": "a9ef80f570b885798cbc94d1ea152e62621b9ac7aad117e1d0de802546b7ab4b"
+		},
+		{
+			"path": "worker-lock.mjs",
+			"sha256": "00e53e0968bd43d697adcf7d0a675ede63bd03d17c47652264432bbedbb20418"
+		},
+		{
+			"path": "paid-task.mjs",
+			"sha256": "26274c0fb41fe479f07fd66bf72d2c00aa97f072e6074b67756e6eeb15f109f8"
+		},
+		{
+			"path": "settlement.mjs",
+			"sha256": "2a62a7d19cfca5ebf7519a603032403c101cf5853cc85411bba5e0c5be0fd5ca"
+		},
+		{
+			"path": "standard-hash.mjs",
+			"sha256": "093cde59970482a29e569a88a36ab5f6021eba18f5c89439049097a802f89389"
+		},
+		{
+			"path": "registration-config.mjs",
+			"sha256": "7255fea1472d84750928c4142a24bf648afc455fb69d771d0b7f1a470ffd04ec"
+		},
+		{
+			"path": "sokosumi-runtime.mjs",
+			"sha256": "40101d620299f208b85b69d761c68e4a260dc5064a55633a9c2155c95da2adf4"
+		},
+		{
+			"path": "payment-registration.mjs",
+			"sha256": "22ca142f3a1f14c192e08e30f887655b638d2708c42de6a23dbfc89893fd651c"
+		},
+		{
+			"path": "agent-api.mjs",
+			"sha256": "43ba89e34e2988ee00ef66cd644d2ef0148fcd3202ffa3bb9dfb539cfe819f1d"
+		},
+		{
+			"path": "paid-task.test.mjs",
+			"sha256": "865742122662410bd6847f3c2ebab891f393e01154dceee30ba11c4d10b72303"
+		},
+		{
+			"path": "settlement.test.mjs",
+			"sha256": "da83d7fde47fdc90eaa192b127ffc8ace64eff64763f303473693eae4c97431f"
+		},
+		{
+			"path": "standard-hash.test.mjs",
+			"sha256": "5dcc256aaeaaef565f7893455f79b4e9ee00cc1a0f11317beffeac4a6a7a8841"
+		},
+		{
+			"path": "registration-config.test.mjs",
+			"sha256": "b4dc1cb3e7c4a0298c2eca2cf90f9170f1e8230c1dff90cfb09614cd58fefe3f"
+		},
+		{
+			"path": "task-target.test.mjs",
+			"sha256": "47657a9cb82a5743e2d929714bc95a330a4ddf9b0331e23824e0108a4772a4e0"
+		},
+		{
+			"path": "worker-lock.test.mjs",
+			"sha256": "8dbd57856994832122b2ea62b84169863b8c50f01a1b4eba717da5d609b00af7"
+		}
+	]
+}

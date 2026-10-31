@@ -35,3 +35,6 @@ coverage/
 data/
 *.sqlite
 *.sqlite-*
+
+# Private Sokosumi/Masumi runtime state and credentials
+.local/

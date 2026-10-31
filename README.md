@@ -1,4 +1,12 @@
-# Ocnif Cardano paid reports
+# Ocnif Cardano integration
+
+**Selected route: Masumi + Sokosumi.** Use [the Masumi setup and execution guide](masumi/README.md), Node24.x, Sokosumi CLI1.0.4, and `Dockerfile.masumi`. First verify a Personal Workspace execution-only task, then a paid Masumi task. The Ocnif provider credential stays only in the Rust core.
+
+**Ruta elegida: Masumi + Sokosumi.** La implementación y configuración actuales están en [masumi/README.md](masumi/README.md). Primero se verifica una tarea de ejecución en Personal Workspace y después una tarea pagada de Masumi.
+
+The x402 implementation below is a preserved earlier alternative. It is not the selected Cardano route or evidence of sponsor qualification.
+
+# Historical x402 paid-report alternative
 
 ## Setup / Instalación
 
