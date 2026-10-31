@@ -1,0 +1,10 @@
+# Official Node 24.22.1, Linux amd64, verified from docker.io/library/node.
+FROM node:24.22.1-alpine@sha256:1200d815de24f8dcca745fbf7651d166034a35adbcad8860a8538ffff44f1420
+ENV NODE_ENV=production
+WORKDIR /app
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
+COPY masumi/package.json masumi/agent-server.mjs masumi/config.mjs masumi/readiness.mjs ./
+COPY masumi/agent/instructions.md ./agent/instructions.md
+USER node
+EXPOSE 8096
+CMD ["node", "agent-server.mjs"]
