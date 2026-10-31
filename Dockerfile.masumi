@@ -4,6 +4,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 COPY masumi/package.json masumi/agent-server.mjs masumi/config.mjs masumi/readiness.mjs ./
+COPY masumi/status-reader.mjs masumi/status-evidence.mjs masumi/task-target.mjs ./
 COPY masumi/agent/instructions.md ./agent/instructions.md
 USER node
 EXPOSE 8096
