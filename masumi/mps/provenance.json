@@ -1,0 +1,49 @@
+{
+	"repository": "https://github.com/masumi-network/masumi-payment-service",
+	"commit": "a846392ccfc8f5a85aee594ad9441dc90820dab0",
+	"node": "24.22.1",
+	"pnpm": "10.30.2",
+	"patchSha256": "05ac2625f7695dba4cff50f701e7f6b3e87d9e65c42d1cfad0f44ab2d339365e",
+	"files": {
+		"packages/payment-core/src/config.ts": {
+			"original": "c134eaf2ba17b373e64bf7e03e2531372e5f99f6024e04df9318911b7d255589",
+			"patched": "5aebe0e31de84e5d5f792b697885ac099ef69d8e4d8181182a57ac3034a60b40"
+		},
+		"pnpm-lock.yaml": {
+			"original": "7b73c95d8347dd99c5489423e679c2dead650b9d4c4cd9c81b4b70cfc99040f7",
+			"patched": "870ddf759501e086f6d553dc797f1e1df4cb57d1226ec4b6717de4fa5108fac4"
+		},
+		"pnpm-workspace.yaml": {
+			"original": "d6861497a2820b6c978a9561fe18bb302a8d8735df3281a5b98af44c92641768",
+			"patched": "06ddf66b20025e496333eabb846d7fa09f0cc7cfbbe4520ff1adb66685234d16"
+		},
+		"prisma/seed.validation.ts": {
+			"original": "f8ac12244a925c4b443cdc85dbc619558a6cc4325468ac1a004a0c0153a255e0",
+			"patched": "3c4b87fa9605bd2ba0844dbfa31ef6a096562c7b997bd2744ccb683323ec3eab"
+		},
+		"src/app.ts": {
+			"original": "2f8e08162271369314738e28948a2d852fd847384c0c7c557779a078d6445d5a",
+			"patched": "3a40436492c21521b212ef9f6348c3a78cecc26cb44893a2505ba3d14e8794c2"
+		}
+	},
+	"scope": [
+		"Loopback binding by default",
+		"Do not print generated wallet mnemonics",
+		"Four exact transitive dependency updates; Mesh SDK version isolation unchanged"
+	],
+	"validation": {
+		"backendTypecheck": "passed",
+		"productionAudit": {
+			"critical": 0,
+			"high": 0,
+			"moderate": 4,
+			"low": 0
+		},
+		"auditDate": "2026-10-31"
+	},
+	"limits": [
+		"Native local payment service only; not deployed in Azure",
+		"No funded Masumi settlement is evidenced by this preparation",
+		"Remaining minimatch/glob moderate findings are not resolved by a speculative major-version override"
+	]
+}

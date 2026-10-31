@@ -1,14 +1,14 @@
 # Ocnif Masumi and Sokosumi agent
 
-This is the selected Cardano integration. The agent turns supplied security evidence into an observed-facts assessment, uncertainty, prioritized remediation, and verification/rollback steps. Its Node24 bridge calls the existing Ocnif Rust core. The provider credential stays only in that core. This bridge does not launch scanners or contact a target.
+This is the selected Cardano integration. The agent turns supplied security evidence into an observed-facts assessment, uncertainty, prioritized remediation, and verification/rollback steps. Its Node 24 bridge calls the existing Ocnif Rust core. The provider credential stays only in that core. This bridge does not launch scanners or contact a target.
 
-The worker/payment state machines adapt the official TUM quickstart at revision `d93783b907a5b0b7008c67496c6e093faa70553f`; `provenance.json` records exact upstream source hashes. Upstream README and AGENTS were read; governance was not copied. Eve/ZAI inference is replaced by the Ocnif core bridge, so this subproject has no npm runtime dependencies. The separately installed Sokosumi CLI must be **1.0.4 under Node24.x** because the supported vault/runtime adapter imports that version's modules.
+The worker/payment state machines adapt the official TUM quickstart at revision `d93783b907a5b0b7008c67496c6e093faa70553f`; `provenance.json` records exact upstream source hashes. Upstream README and AGENTS were read; governance was not copied. Eve/ZAI inference is replaced by the Ocnif core bridge, so this subproject has no npm runtime dependencies. The separately installed Sokosumi CLI must be **1.0.4 under Node 24.x** because the supported vault/runtime adapter imports that version's modules.
 
 ## Current Preprod compatibility
 
-CLI1.0.4 currently calls a removed Personal Workspace endpoint. Ocnif's `node sokosumi.mjs ...` wrapper preserves that pinned CLI and OS vault while adapting only its Personal Workspace module to the current official API. The hook checks the original module's SHA256 before substitution; `provenance.json` pins the current official source. No global CLI files are changed. Use this wrapper for the guide's personal setup/Task commands (omit the redundant `--preprod` and `--json`, supplied by the wrapper). Account login remains the supported global CLI command. Runtime worker calls use the same compatibility wrapper automatically.
+CLI 1.0.4 currently calls a removed Personal Workspace endpoint. Ocnif's `node sokosumi.mjs ...` wrapper preserves that pinned CLI and OS vault while adapting only its Personal Workspace module to the current official API. The hook checks the original module's SHA256 before substitution; `provenance.json` pins the current official source. No global CLI files are changed. Use this wrapper for the guide's personal setup/Task commands (omit the redundant `--preprod` and `--json`, supplied by the wrapper). Account login remains the supported global CLI command. Runtime worker calls use the same compatibility wrapper automatically.
 
-The live corrected route returned Personal Workspace existence and GRANTED access. On October31,2026, the resulting actual Task reached COMPLETED with a saved Rust-core review. This is execution-only evidence, not payment settlement.
+The live corrected route returned Personal Workspace existence and GRANTED access. On October 31, 2026, the resulting actual Task reached COMPLETED with a saved Rust-core review. This is execution-only evidence, not payment settlement.
 
 ## Execution-only setup first
 
@@ -22,7 +22,7 @@ The live corrected route returned Personal Workspace existence and GRANTED acces
    ```
 
    Never paste this credential into `.env`, chat, or Git. Do not generate another key on resume after successful import.
-4. From this directory, install the empty locked dependency set with `npm ci --ignore-scripts`. If `.env` does not already exist, copy `.env.example` and set mode600. Configure `CORE_HTTP_URL`, the shared `INTERNAL_TOKEN`, local agent URL/port, and your `COWORKER_ID`. Leave both organization settings blank and `PAID_TASKS_ENABLED=false`. No model-provider key belongs here.
+4. From this directory, install the empty locked dependency set with `npm ci --ignore-scripts`. If `.env` does not already exist, copy `.env.example` and set mode 600. Configure `CORE_HTTP_URL`, the shared `INTERNAL_TOKEN`, local agent URL/port, and your `COWORKER_ID`. Leave both organization settings blank and `PAID_TASKS_ENABLED=false`. No model-provider key belongs here.
 5. Start `npm start`; run `npm run probe` once to verify a real core result, then `npm run worker` in another terminal. Keep exactly one worker and agent running. The supported CLI credential vault and private journals remain on this host.
 6. Only after `Continuous worker running`, create a small task using your account login:
 
@@ -39,7 +39,7 @@ The worker saves a pending journal before starting a task, model request, comple
 
 ## Masumi paid task after execution proof
 
-Use the official Masumi Payment Service setup for a **dedicated** Preprod database, encryption key, and selling wallet. Keep the setup-only administrator key in `.local/mps.env` mode600; never pass it to the continuous worker. Fund the selling wallet with test ADA. Buyer Preprod credits/test tokens and seller transaction-fee funds are different requirements.
+Use the [pinned local payment-service preparation](mps/README.md) for a **dedicated** Preprod database, encryption key, and selling wallet. Its verified patch prevents mnemonic logging, binds the service to loopback, and preserves the upstream payment SDK versions. Keep the setup-only administrator key in `.local/mps.env` mode 600; never pass it to the continuous worker. Fund the selling wallet with test ADA. Buyer Preprod credits/test tokens and seller transaction-fee funds are different requirements.
 
 Save only your own returned `sourceId`, `walletId`, and `sellerAddress` in private `.local/payment-state.json`. Set `MPS_URL`, `AGENT_API_PORT`, `AGENT_AUTHOR`, and `BLOCKFROST_API_KEY_PREPROD` in private `.env`. The selected Masumi settlement verifier uses a **Preprod Blockfrost project key**; enter it locally, never in chat. The historical x402 Koios route does not remove this requirement.
 
@@ -55,12 +55,12 @@ Start `npm run api`, enable `PAID_TASKS_ENABLED=true`, and restart the single wo
 
 ## API and deployment
 
-`GET /health` is process liveness. `GET /v1/config` reports `integration:"masumi-sokosumi"`, Preprod, Rust-core health, and separate worker/execution/paid setup states. It exposes no task content or credential. Optional local receipt metadata names its source and observation time. `POST /answer` requires the shared bearer token and accepts `{input,history?}`. Input is limited to12,000 UTF-8 bytes and assembled core context to16,000 bytes.
+`GET /health` is process liveness. `GET /v1/config` reports `integration:"masumi-sokosumi"`, Preprod, Rust-core health, and separate worker/execution/paid setup states. It exposes no task content or credential. Optional local receipt metadata names its source and observation time. `POST /answer` requires the shared bearer token and accepts `{input,history?}`. Input is limited to 12,000 UTF-8 bytes and assembled core context to 16,000 bytes.
 
-Build `Dockerfile.masumi` from the repository root. It contains only the stateless Node24 agent bridge, runs as non-root, and uses no ledger volume or Coworker credential. Set `AGENT_HOST=0.0.0.0`, `AGENT_PORT=8096`, `CORE_HTTP_URL`, `INTERNAL_TOKEN`, and optional `AGENT_LOCALE`. Use `docker-compose.masumi.yml` only for local development and set its core URL to an actually reachable host.
+Build `Dockerfile.masumi` from the repository root. It contains only the stateless Node 24 agent bridge, runs as non-root, and uses no ledger volume or Coworker credential. Set `AGENT_HOST=0.0.0.0`, `AGENT_PORT=8096`, `CORE_HTTP_URL`, `INTERNAL_TOKEN`, and optional `AGENT_LOCALE`. Use `docker-compose.masumi.yml` only for local development and set its core URL to an actually reachable host.
 
 The native worker requires the user's supported CLI vault and durable private `.local` directory. The cloud image does not contain that worker, vault, MPS, or local receipts. Therefore cloud setup flags remain unverified; a health response is never proof of a completed or paid task. The legacy root Dockerfile and x402 source remain an explicit earlier alternative.
 
 ## Verification boundary
 
-Run `npm test`. Tests cover real local HTTP authentication/limits/error redaction, exact completion-result confirmation, cross-workspace isolation, uncertain effects, payment terms and deadlines, confirmed escrow, receipt accounting, and concurrent worker locks. They use offline fixtures for Sokosumi/MPS and cannot prove settlement. A real local Rust-core probe returned a useful synthetic-evidence review on October31,2026; account execution and funded settlement require their own later receipts. No paid task or on-chain transfer is claimed by these tests.
+Run `npm test` (44 tests at this source revision). Tests cover real local HTTP authentication/limits/error redaction, exact completion-result confirmation, cross-workspace isolation, uncertain effects, payment terms and deadlines, confirmed escrow, receipt accounting, and concurrent worker locks. They use offline fixtures for Sokosumi/MPS and cannot prove settlement. A real local Rust-core probe returned a useful synthetic-evidence review on October 31, 2026; the real Personal Workspace Task and follow-up also completed, with their private receipts retained separately. Funded settlement still requires its own receipt. No paid task or on-chain transfer is claimed by these tests.

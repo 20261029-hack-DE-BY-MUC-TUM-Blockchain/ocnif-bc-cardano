@@ -1,0 +1,120 @@
+diff --git a/packages/payment-core/src/config.ts b/packages/payment-core/src/config.ts
+index 7d8720e..0d65737 100644
+--- a/packages/payment-core/src/config.ts
++++ b/packages/payment-core/src/config.ts
+@@ -256,0 +257 @@ export const CONFIG = {
++	HOST: process.env.HOST || '127.0.0.1',
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 5a8c2e7..71c36b8 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -9 +9 @@ overrides:
+-  '@hono/node-server': 2.0.10
++  '@hono/node-server': 2.1.3
+@@ -27 +27 @@ overrides:
+-  follow-redirects: 1.16.1
++  follow-redirects: 1.16.2
+@@ -50 +50 @@ overrides:
+-  qs: 6.16.0
++  qs: 6.16.1
+@@ -53,0 +54 @@ overrides:
++  systeminformation: 5.33.16
+@@ -1657,2 +1658,2 @@ packages:
+-  '@hono/node-server@2.0.10':
+-    resolution: {integrity: sha512-ZcnNVhKTmyDJeg0UlnZjvM73JBsTAuhrH/J4fjwGOw59PwOW51r4J+p6CsKZWXdKSme4MFqU62CZMOsdDrU4CA==}
++  '@hono/node-server@2.1.3':
++    resolution: {integrity: sha512-TA//nWMqPhbfdfneACk6t5a9eqbS9lABEPyKn0/xZTah3H3U2XaVg85rJFl0/Fyit0I552YDHgXGVSf3GwqbUw==}
+@@ -5810,2 +5811,2 @@ packages:
+-  follow-redirects@1.16.1:
+-    resolution: {integrity: sha512-FNvFGzoMLWmE6Yj9spb/zjd7yiNCHiAW9/Tg9CXrQ8wuu32HtlJOwWO11OJafl5FfY3DxTdQ0vj42zU1kvv5jg==}
++  follow-redirects@1.16.2:
++    resolution: {integrity: sha512-/kVP2U8z596Ia0gwFrwyIeo74ta5aVmSeU1FfAUMAmcEP5EP7zydmag3SLiN64NaRKef3lxsq7i/g7ltJQDGow==}
+@@ -7650,2 +7651,2 @@ packages:
+-  qs@6.16.0:
+-    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
++  qs@6.16.1:
++    resolution: {integrity: sha512-5Px6J7rfHBAGUhNQ3es4YzcOdBBw0SDcVtThJml4RdnKw4tKs2epA0kPZ+K8X+WiHktT93RHVcQ/3ym5aTCgtg==}
+@@ -8244,2 +8245,2 @@ packages:
+-  systeminformation@5.33.15:
+-    resolution: {integrity: sha512-s5RloL0F7xhN0ZjfHtLGnbf7EW74EI0N8NFL+1xR7Oxz9QA33obNZsl7lyfnJOhN04E/kGFPoJPlvY7TZ5fzmw==}
++  systeminformation@5.33.16:
++    resolution: {integrity: sha512-R+Lh69IJXfJj6bfyH1In5cIR9FTr4hBS39YvlZHZjsK1p9cuELPq7hplZZIb56ZESMMb+DzdKqqE6Iomi01Mvg==}
+@@ -10031 +10032 @@ snapshots:
+-  '@hono/node-server@2.0.10(hono@4.13.11)':
++  '@hono/node-server@2.1.3(hono@4.13.11)':
+@@ -11325 +11326 @@ snapshots:
+-      systeminformation: 5.33.15
++      systeminformation: 5.33.16
+@@ -12040 +12041 @@ snapshots:
+-      '@hono/node-server': 2.0.10(hono@4.13.11)
++      '@hono/node-server': 2.1.3(hono@4.13.11)
+@@ -13701 +13702 @@ snapshots:
+-      follow-redirects: 1.16.1
++      follow-redirects: 1.16.2
+@@ -13828 +13829 @@ snapshots:
+-      qs: 6.16.0
++      qs: 6.16.1
+@@ -14925 +14926 @@ snapshots:
+-      qs: 6.16.0
++      qs: 6.16.1
+@@ -15052 +15053 @@ snapshots:
+-  follow-redirects@1.16.1: {}
++  follow-redirects@1.16.2: {}
+@@ -17047 +17048 @@ snapshots:
+-  qs@6.16.0:
++  qs@6.16.1:
+@@ -17742 +17743 @@ snapshots:
+-  systeminformation@5.33.15: {}
++  systeminformation@5.33.16: {}
+diff --git a/pnpm-workspace.yaml b/pnpm-workspace.yaml
+index e09ec01..1365fa1 100644
+--- a/pnpm-workspace.yaml
++++ b/pnpm-workspace.yaml
+@@ -21 +21 @@ overrides:
+-  '@hono/node-server': 2.0.10
++  '@hono/node-server': 2.1.3
+@@ -41 +41 @@ overrides:
+-  follow-redirects: 1.16.1
++  follow-redirects: 1.16.2
+@@ -64 +64 @@ overrides:
+-  qs: 6.16.0
++  qs: 6.16.1
+@@ -67,0 +68 @@ overrides:
++  systeminformation: 5.33.16
+diff --git a/prisma/seed.validation.ts b/prisma/seed.validation.ts
+index 1fb130f..0505353 100644
+--- a/prisma/seed.validation.ts
++++ b/prisma/seed.validation.ts
+@@ -42,5 +42 @@ export type ResolvedMnemonic = {
+-export function resolveMnemonic(
+-	raw: string | undefined,
+-	envName: string,
+-	brew: () => string,
+-): ResolvedMnemonic {
++export function resolveMnemonic(raw: string | undefined, envName: string, brew: () => string): ResolvedMnemonic {
+@@ -58,13 +54,5 @@ export function printGeneratedMnemonics(generated: ResolvedMnemonic[]): void {
+-	const toShow = generated.filter((entry) => entry.wasGenerated);
+-	if (toShow.length === 0) {
+-		return;
+-	}
+-
+-	console.warn('****************************************************');
+-	console.warn('**  GENERATED WALLET MNEMONICS — SAVE THESE NOW!   **');
+-	console.warn('**  These were not in your .env. Store them securely.**');
+-	console.warn('****************************************************');
+-	for (const entry of toShow) {
+-		console.warn(`${entry.envName}=${entry.mnemonic}`);
+-	}
+-	console.warn('****************************************************');
++	const count = generated.filter((entry) => entry.wasGenerated).length;
++	if (count > 0)
++		console.warn(
++			`Generated ${count} wallet secrets. Values are not logged; preserve the encrypted database and encryption key securely.`,
++		);
+diff --git a/src/app.ts b/src/app.ts
+index 1b678fa..5848909 100644
+--- a/src/app.ts
++++ b/src/app.ts
+@@ -408 +408 @@ export async function startApp() {
+-			listen: PORT,
++			listen: { port: Number(PORT), host: CONFIG.HOST },
