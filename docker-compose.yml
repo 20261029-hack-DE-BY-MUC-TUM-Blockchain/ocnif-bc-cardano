@@ -1,0 +1,21 @@
+services:
+  cardano:
+    build: .
+    image: ocnif-bc-cardano:dev
+    env_file: .env
+    volumes: ["payment_data:/data"]
+    ports: ["${PORT:-8096}:${PORT:-8096}"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:'+process.env.PORT+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits: { cpus: "0.5", memory: 512M }
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+volumes:
+  payment_data:
